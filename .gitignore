@@ -1,0 +1,9 @@
+.env
+.idea/
+.vscode/
+*.iml
+pet-server/target/
+pet-miniapp/node_modules/
+pet-miniapp/dist/
+pet-miniapp/unpackage/
+*.log
