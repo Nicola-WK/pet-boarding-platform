@@ -23,3 +23,5 @@
 - 实际宠物创建成功，但列表查询遇到 SQL 语法错误；根因是 character 列名未引用，被 MySQL 解析为保留字。已在实体字段映射加反引号，待复测。
 - 修复 character 列映射后重建并重启：真实 HTTP 校验通过，未登录 401、用户资料 200、宠物新增/列表/更新/删除正常，第二用户读取和删除均为 404，数据库 is_deleted=1。
 - 隔离 MySQL 测试实例、后端测试进程和临时数据均已停止/清理；真实 MySQL84 的 pet_boarding login-path 仍返回 1045，未做更改。
+
+- 用户授权重置 MySQL84 root 密码；按官方 init-file 流程完成，临时文件已删除，服务恢复 Running。pet_boarding login-path 验证 root@localhost / 3306 / MySQL 8.4.9 成功。真实实例尚无 pet_boarding 数据库，待项目部署阶段创建并执行 Flyway。

@@ -32,3 +32,5 @@
 - 微信开发者工具及 cli.bat 位于 D:\xunleidownload\wechat\微信web开发者工具；当前小程序只有目录骨架，暂无可导入页面。
 - 隔离 MySQL 8.4.9 实例上 Flyway V1 迁移成功，九张业务表与 flyway_schema_history 均存在；后端真实启动、JWT 身份、宠物 CRUD 和跨用户隔离均通过。
 - MySQL 8.4 把 character 视为需引用的标识符；Pet 实体映射已加反引号。隔离实例与临时数据验证后已停止并清理。
+
+- 真实 MySQL84 root 密码已按官方 init-file 流程重置；pet_boarding login-path 可认证。现有服务无 pet_boarding 数据库，未对业务库执行迁移。
