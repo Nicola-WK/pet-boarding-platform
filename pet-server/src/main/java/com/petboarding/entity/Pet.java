@@ -23,6 +23,7 @@ public class Pet {
     private LocalDateTime birthday;
     private BigDecimal weight;
     private String vaccine;
+    @TableField("`character`")
     private String character;
     private String diet;
     private String remark;

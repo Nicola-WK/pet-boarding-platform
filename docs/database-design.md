@@ -1,6 +1,6 @@
 # V1.0 数据库设计
 
-数据库名：`pet_boarding`。MySQL 8、InnoDB、`utf8mb4_0900_ai_ci`。主键为应用生成的 `BIGINT`；所有时间字段为 `DATETIME`。业务日期按中国标准时间解释，订单区间采用 `[start_at, end_at)`，入店日含、离店日不含。后续 API 层需要明确时区并统一转换。
+数据库名：`pet_boarding`。MySQL 8、InnoDB、`utf8mb4_0900_ai_ci`。主键为应用生成的 `BIGINT`；所有时间字段为 `DATETIME`。业务日期按中国标准时间解释，订单区间采用 `[start_at, end_at)`，入店日含、离店日不含。后续 API 层需要明确时区并统一转换。`pet.character` 字段在 MySQL 查询中必须加反引号，实体映射已按此处理。
 
 ## 表与关系
 
