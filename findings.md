@@ -14,3 +14,15 @@
 
 ## 范围确认
 - 用户确认本轮只做项目初始化和数据库设计。
+
+## Step 3–5 技术核对
+- Spring Security 官方支持 Resource Server 验证自定义 JWT，并提供 NimbusJwtEncoder；将使用 HS256 和配置提供的密钥。
+- MyBatis-Plus 官方提供 Spring Boot 3 starter 与 ASSIGN_ID；与现有 BIGINT 主键匹配。
+- Flyway MySQL 需要单独的 flyway-mysql 模块。
+- 微信 code2Session 使用后台请求，返回 openid；session_key 不下发客户端。
+
+## Step 3–5 结果
+- 后端使用 Spring Boot 3.5.16、MyBatis-Plus 3.5.17、Flyway MySQL 模块、Spring Security Resource Server、Redis 依赖。
+- JWT issuer 必须是 HTTP(S) URL，HS256 密钥至少 32 字节；错误 HTTP 响应同样采用统一 JSON。
+- 宠物读写必须含 user_id 条件，删除为软删除；PUT 明确支持清空可选字段。
+- MySQL 和 Docker 仍未提供，因此无法验证 Flyway 实际建表或真实微信接口调用。

@@ -1,46 +1,55 @@
 # 宠爱管家（Pet Boarding Platform）
 
-宠物寄养微信小程序 V1.0。当前仓库完成了 **Step 1 项目初始化** 和 **Step 2 数据库设计**。业务 API、微信支付和小程序页面将在后续步骤实现。
+宠物寄养微信小程序 V1.0。已完成 Step 1–5：初始化、数据库设计、后端基础框架、微信登录和宠物档案。商家、订单、支付及小程序页面仍按 [开发计划](task_plan.md) 后续阶段实现。
 
 ## 目录
 
 | 路径 | 用途 |
 | --- | --- |
-| `pet-server/` | Java 17、Spring Boot 3 后端工程骨架 |
-| `pet-miniapp/` | uni-app、Vue 3、TypeScript 小程序工程骨架 |
+| `pet-server/` | Java 17、Spring Boot 3、MyBatis-Plus 后端 |
+| `pet-miniapp/` | uni-app 小程序目录骨架，页面阶段再接入依赖 |
 | `database/create_database.sql` | 创建 MySQL 8 数据库 |
-| `pet-server/src/main/resources/db/migration/V1__init.sql` | 九张业务表的首版迁移 |
+| `pet-server/src/main/resources/db/migration/V1__init.sql` | Flyway 首版九表迁移 |
 | `docs/database-design.md` | 表关系、字段及业务约束 |
+| `docs/api-auth-pet.md` | 本阶段 API、测试流程和错误码 |
 
-## 数据库初始化
+## 运行后端
 
-准备 MySQL 8。在项目根目录打开 MySQL 客户端（`mysql -u root -p`），使用有建库权限的账号执行：
+需要 Java 17、Maven 3.9+、MySQL 8。先在项目根目录使用 MySQL 客户端创建空库：
 
 ```sql
 SOURCE database/create_database.sql;
-USE pet_boarding;
-SOURCE pet-server/src/main/resources/db/migration/V1__init.sql;
-SHOW TABLES;
-SHOW CREATE TABLE boarding_order;
 ```
 
-迁移脚本是一次性脚本。本阶段可在临时开发数据库手动验证；后续后端基础框架阶段接入 Flyway 时，应在全新数据库由 Flyway 执行，避免重复建表。数据库账号、微信密钥、COS 密钥和 JWT 密钥应通过环境变量提供，不提交到仓库。
+由 Flyway 在首次启动时执行建表脚本。此前手动导入过 `V1__init.sql` 的临时库应重建为空库，再由 Flyway 接管。
 
-## 当前阶段的校验
+参考 [环境变量模板](.env.example) 在运行进程中设置变量。不要提交真实数据库密码、微信 AppSecret 或 JWT 密钥。JWT 密钥必须由安全随机数生成，Base64 解码后至少 32 字节；JWT_ISSUER 必须是当前服务的 URL。PowerShell 可生成密钥：
+
+```powershell
+$env:JWT_SECRET_BASE64 = python -c "import base64,secrets; print(base64.b64encode(secrets.token_bytes(32)).decode())"
+```
+
+其余必需变量：`DB_USERNAME`、`DB_PASSWORD`、`JWT_ISSUER`、`WECHAT_APP_ID`、`WECHAT_APP_SECRET`。按实际环境设置 `DB_URL`，必要时设置 Redis 连接变量。然后运行：
 
 ```powershell
 cd pet-server
-mvn validate
-cd ../pet-miniapp
-npm pkg get name version private
+mvn spring-boot:run
 ```
 
-目前没有可运行的后端服务或小程序页面，因此 `mvn spring-boot:run` 和小程序开发命令要等对应开发步骤完成后使用。
+`GET /health` 返回统一格式的健康响应。首次启动需要 MySQL 可连接，Flyway 会创建九张业务表。本阶段尚未使用 Redis 缓存，但已接入 Redis 依赖并预留连接配置。
+
+## API 验证
+
+微信小程序调用 `wx.login()` 获取一次性 code，发送给 `POST /auth/wechat/login`。服务端换取 openid，创建或复用用户并返回 Bearer JWT。使用该 JWT 调用 `GET /users/profile` 和宠物接口。请求与响应示例见 [API 文档](docs/api-auth-pet.md)。
+
+```powershell
+cd pet-server
+mvn test
+mvn package
+```
+
+页面测试将在小程序页面开发阶段进行。当前没有小程序运行脚本或页面，也无法在没有 MySQL 和微信小程序配置的环境完成真实登录联调。
 
 ## 开发顺序
 
 项目初始化 → 数据库设计 → 后端基础框架 → 用户认证 → 宠物档案 → 商家 → 寄养服务 → 订单 → 支付 → 评价 → 小程序页面 → 测试。
-
-## 设计边界
-
-数据库保存商家、宠物、服务、订单、支付和评价数据。照片字段只保存腾讯云 COS URL；文件上传与访问控制在后续业务步骤实现。订单金额使用 `DECIMAL(10,2)`，订单表保存下单时的服务单价快照，避免后续改价影响历史订单。
