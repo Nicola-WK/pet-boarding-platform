@@ -25,6 +25,8 @@ app:
     ttl: ${JWT_TTL:PT168H}
   admin:
     openids: ${ADMIN_OPENIDS:}
+  payment:
+    demo-enabled: ${PAYMENT_DEMO_ENABLED:false}
 wechat:
   miniapp:
     app-id: ${WECHAT_APP_ID}

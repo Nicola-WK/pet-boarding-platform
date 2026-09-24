@@ -12,6 +12,9 @@ public interface BoardingOrderMapper extends BaseMapper<BoardingOrder> {
     @Select("SELECT id FROM boarding_service WHERE id = #{serviceId} FOR UPDATE")
     Long lockService(@Param("serviceId") long serviceId);
 
+    @Select("SELECT * FROM boarding_order WHERE id = #{id} FOR UPDATE")
+    BoardingOrder lockOrder(@Param("id") long id);
+
     @Select("SELECT id FROM boarding_order WHERE pet_id = #{petId} " +
             "AND start_at < #{endAt} AND end_at > #{startAt} " +
             "AND (status IN (1, 2) OR (status = 0 AND expires_at > #{now})) LIMIT 1 FOR UPDATE")
