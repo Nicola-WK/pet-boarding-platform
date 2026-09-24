@@ -86,6 +86,12 @@ public class BoardingServiceService {
     }
 
     @Transactional(readOnly = true)
+    public BoardingServiceResponse getMine(long userId, long id) {
+        Provider provider = requireOwnerProvider(userId);
+        return response(requireOwned(id, provider.getId()));
+    }
+
+    @Transactional(readOnly = true)
     public PageResponse<BoardingServiceResponse> mine(long userId, int page, int size) {
         Provider provider = requireOwnerProvider(userId);
         checkPage(page, size);

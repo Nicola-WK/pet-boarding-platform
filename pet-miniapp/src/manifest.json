@@ -1,0 +1,13 @@
+{
+  "name": "宠爱管家",
+  "appid": "",
+  "description": "宠物寄养服务预约小程序",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "mp-weixin": {
+    "appid": "",
+    "usingComponents": true
+  },
+  "vueVersion": "3"
+}

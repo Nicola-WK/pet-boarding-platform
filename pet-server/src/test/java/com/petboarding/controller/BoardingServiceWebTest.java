@@ -91,4 +91,12 @@ class BoardingServiceWebTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value(40001));
     }
+    @Test
+    void ownerCanToggleServiceWithWechatCompatiblePost() throws Exception {
+        mvc.perform(post("/provider/services/21/status")
+                        .with(jwt().jwt(token -> token.subject("7")))
+                        .contentType(MediaType.APPLICATION_JSON).content("{\"active\":false}"))
+                .andExpect(status().isOk());
+        verify(service).setActive(7L, 21L, false);
+    }
 }

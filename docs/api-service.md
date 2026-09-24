@@ -58,3 +58,9 @@ Invoke-RestMethod -Uri 'http://localhost:8080/services?petType=dog&minPrice=50&m
 ## 页面测试流程
 
 小程序页面属于 Step 11，当前没有可运行的服务管理或浏览页面。页面接入后检查：商家创建及下架服务、用户按类型和价格筛选、商家详情中的服务列表、服务详情、商家重新审核时服务隐藏。
+
+## 小程序商家管理补充
+
+`GET /provider/services/{id}` 仅供当前登录商家读取自己的服务，包含已下架服务，便于编辑。
+
+`POST /provider/services/{id}/status` 与原 PATCH 接口接受相同的 JSON 请求体，字段 `active` 为布尔值，以兼容微信小程序的请求方法支持范围；两种方法均检查服务所有权。

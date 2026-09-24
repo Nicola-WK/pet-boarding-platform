@@ -1,12 +1,15 @@
 package com.petboarding.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import com.petboarding.entity.BoardingOrder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record BoardingOrderResponse(Long id, String orderNo, Long userId, Long petId, Long providerId,
-                                    Long serviceId, LocalDateTime startAt, LocalDateTime endAt,
+public record BoardingOrderResponse(@JsonSerialize(using = ToStringSerializer.class) Long id, String orderNo, @JsonSerialize(using = ToStringSerializer.class) Long userId, @JsonSerialize(using = ToStringSerializer.class) Long petId, @JsonSerialize(using = ToStringSerializer.class) Long providerId,
+                                    @JsonSerialize(using = ToStringSerializer.class) Long serviceId, LocalDateTime startAt, LocalDateTime endAt,
                                     Integer boardingDays, BigDecimal unitPrice, BigDecimal totalAmount,
                                     Integer status, String remark, LocalDateTime expiresAt,
                                     LocalDateTime paidAt, LocalDateTime confirmedAt,

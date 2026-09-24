@@ -1,0 +1,27 @@
+{
+  "pages": [
+    { "path": "pages/home/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/boarding/list", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/provider/detail", "style": { "navigationBarTitleText": "商家详情" } },
+    { "path": "pages/order/create", "style": { "navigationBarTitleText": "预约寄养" } },
+    { "path": "pages/order/list", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/order/detail", "style": { "navigationBarTitleText": "订单详情" } },
+    { "path": "pages/pet/list", "style": { "navigationBarTitleText": "我的宠物" } },
+    { "path": "pages/pet/edit", "style": { "navigationBarTitleText": "宠物档案" } },
+    { "path": "pages/user/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/provider/manage", "style": { "navigationBarTitleText": "商家资料" } },
+    { "path": "pages/provider/service-edit", "style": { "navigationBarTitleText": "服务管理" } },
+    { "path": "pages/provider/orders", "style": { "navigationBarTitleText": "商家订单" } },
+    { "path": "pages/review/create", "style": { "navigationBarTitleText": "评价服务" } }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "宠爱管家",
+    "navigationBarBackgroundColor": "#FFFDF9",
+    "backgroundColor": "#FFFDF9"
+  },
+  "easycom": {
+    "autoscan": true,
+    "custom": { "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue" }
+  }
+}

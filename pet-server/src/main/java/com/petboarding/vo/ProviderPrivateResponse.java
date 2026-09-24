@@ -1,12 +1,15 @@
 package com.petboarding.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import com.petboarding.entity.Provider;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record ProviderPrivateResponse(Long id, Long ownerUserId, String name, String contactPhone,
+public record ProviderPrivateResponse(@JsonSerialize(using = ToStringSerializer.class) Long id, @JsonSerialize(using = ToStringSerializer.class) Long ownerUserId, String name, String contactPhone,
                                       String address, BigDecimal latitude, BigDecimal longitude,
                                       String description, List<String> images, String licenseImage,
                                       Integer auditStatus, String auditReason, LocalDateTime auditedAt,

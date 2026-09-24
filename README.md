@@ -1,13 +1,13 @@
 # 宠爱管家（Pet Boarding Platform）
 
-宠物寄养微信小程序 V1.0。已完成 Step 1–8、可关闭的 Step 9 本地模拟支付框架和 Step 10 评价系统。真实微信支付暂缓；小程序页面按 [开发计划](task_plan.md) 后续阶段实现。
+宠物寄养微信小程序 V1.0。已完成 Step 1–8、可关闭的 Step 9 本地模拟支付框架、Step 10 评价系统和 Step 11 小程序页面。真实微信支付暂缓；微信登录真机联调需要自己的 AppID 和 AppSecret。
 
 ## 目录
 
 | 路径 | 用途 |
 | --- | --- |
 | `pet-server/` | Java 17、Spring Boot 3、MyBatis-Plus 后端 |
-| `pet-miniapp/` | uni-app 小程序目录骨架，页面阶段再接入依赖 |
+| `pet-miniapp/` | uni-app Vue 3 小程序页面、接口封装与运行说明 |
 | `database/create_database.sql` | 创建 MySQL 8 数据库 |
 | `pet-server/src/main/resources/db/migration/V1__init.sql` | Flyway 首版九表迁移 |
 | `docs/database-design.md` | 表关系、字段及业务约束 |
@@ -17,6 +17,7 @@
 | `docs/api-order.md` | 下单、订单查询、商家履约和测试流程 |
 | `docs/api-payment-demo.md` | 本地模拟支付开关、接口与测试流程 |
 | `docs/api-review.md` | 订单评价、公开列表与测试流程 |
+| `docs/frontend-test-flow.md` | 小程序页面、API 示例与测试流程 |
 
 ## 运行后端
 
@@ -53,7 +54,7 @@ mvn test
 mvn package
 ```
 
-本地演示支付可设置 `PAYMENT_DEMO_ENABLED=true`，默认关闭；详见 [模拟支付 API](docs/api-payment-demo.md)。页面测试将在小程序页面开发阶段进行。当前没有小程序运行脚本或页面；真实微信登录联调仍需小程序 AppID 和 AppSecret。
+本地演示支付可设置 `PAYMENT_DEMO_ENABLED=true`，默认关闭；详见 [模拟支付 API](docs/api-payment-demo.md)。小程序构建与调试见 [前端运行说明](pet-miniapp/README.md)。前端页面与接口验证步骤见 [测试流程](docs/frontend-test-flow.md)。真实微信登录联调仍需小程序 AppID 和 AppSecret。
 
 ## 开发顺序
 

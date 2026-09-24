@@ -124,4 +124,15 @@ class BoardingServiceServiceTest {
         assertEquals(ErrorCode.VALIDATION_ERROR, error.errorCode());
         verifyNoInteractions(mapper);
     }
+    @Test
+    void ownerCanReadInactiveServiceForEditing() {
+        when(providerMapper.selectOne(any())).thenReturn(provider(1));
+        BoardingServiceEntity inactive = new BoardingServiceEntity();
+        inactive.setId(21L);
+        inactive.setProviderId(15L);
+        inactive.setStatus(0);
+        inactive.setImages("[]");
+        when(mapper.selectOne(any())).thenReturn(inactive);
+        assertEquals(0, service().getMine(7L, 21L).status());
+    }
 }
