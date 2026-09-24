@@ -69,7 +69,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/health", "/auth/wechat/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/providers", "/providers/{id}",
-                                "/providers/{id}/services", "/services", "/services/{id}").permitAll()
+                                "/providers/{id}/services", "/providers/{id}/reviews",
+                                "/services", "/services/{id}", "/services/{id}/reviews").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint((request, response, ex) ->

@@ -4,6 +4,7 @@ import com.petboarding.config.JwtProperties;
 import com.petboarding.mapper.BoardingOrderMapper;
 import com.petboarding.mapper.BoardingServiceMapper;
 import com.petboarding.mapper.PaymentRecordMapper;
+import com.petboarding.mapper.ReviewMapper;
 import com.petboarding.mapper.PetMapper;
 import com.petboarding.mapper.ProviderMapper;
 import com.petboarding.mapper.UserMapper;
@@ -36,6 +37,7 @@ class DemoPaymentDisabledWebTest {
     @MockitoBean BoardingOrderMapper orderMapper;
     @MockitoBean BoardingServiceMapper serviceMapper;
     @MockitoBean PaymentRecordMapper paymentMapper;
+    @MockitoBean ReviewMapper reviewMapper;
     @MockitoBean PetMapper petMapper;
     @MockitoBean ProviderMapper providerMapper;
     @MockitoBean UserMapper userMapper;

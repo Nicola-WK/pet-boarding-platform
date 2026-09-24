@@ -3,6 +3,7 @@ package com.petboarding.controller;
 import com.petboarding.config.JwtProperties;
 import com.petboarding.mapper.BoardingOrderMapper;
 import com.petboarding.mapper.PaymentRecordMapper;
+import com.petboarding.mapper.ReviewMapper;
 import com.petboarding.mapper.BoardingServiceMapper;
 import com.petboarding.mapper.PetMapper;
 import com.petboarding.mapper.ProviderMapper;
@@ -42,6 +43,7 @@ class BoardingOrderWebTest {
     @Autowired MockMvc mvc;
     @MockitoBean BoardingOrderService service;
     @MockitoBean PaymentRecordMapper paymentRecordMapper;
+    @MockitoBean ReviewMapper reviewMapper;
     @MockitoBean BoardingOrderMapper orderMapper;
     @MockitoBean BoardingServiceMapper serviceMapper;
     @MockitoBean ProviderMapper providerMapper;
