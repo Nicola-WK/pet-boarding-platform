@@ -40,4 +40,7 @@ public interface BoardingServiceMapper extends BaseMapper<BoardingServiceEntity>
             WHERE s.id = #{id} AND s.status = 1 AND p.audit_status = 1
             """)
     BoardingServiceEntity findVisibleById(@Param("id") long id);
+
+    @Select("SELECT s.* FROM boarding_service s JOIN provider p ON p.id = s.provider_id WHERE s.id = #{id} AND s.status = 1 AND p.audit_status = 1 FOR UPDATE")
+    BoardingServiceEntity lockVisibleById(@Param("id") long id);
 }
