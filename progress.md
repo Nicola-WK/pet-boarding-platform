@@ -25,3 +25,8 @@
 - 隔离 MySQL 测试实例、后端测试进程和临时数据均已停止/清理；真实 MySQL84 的 pet_boarding login-path 仍返回 1045，未做更改。
 
 - 用户授权重置 MySQL84 root 密码；按官方 init-file 流程完成，临时文件已删除，服务恢复 Running。pet_boarding login-path 验证 root@localhost / 3306 / MySQL 8.4.9 成功。真实实例尚无 pet_boarding 数据库，待项目部署阶段创建并执行 Flyway。
+
+## 2026-09-24 数据库部署与商家模块
+- 真实 MySQL84 创建 pet_boarding 空库；使用本机交互输入 root 密码，Spring Boot 启动时 Flyway V1 迁移成功，九张业务表与 flyway_schema_history 均存在。一次性后端已停止，未保存 root 密码。
+- 商家申请、资料修改、公开列表/详情和管理员审核 API 已实现；27 项测试通过，JAR 打包成功。
+- 商家模块实际 HTTP 联调需要临时输入数据库密码；本轮测试窗口未进入就绪状态，已关闭，临时脚本/日志已清理。隔离 MySQL 测试实例遇到 undo 表空间启动错误，已安全删除，真实 MySQL84 不受影响。

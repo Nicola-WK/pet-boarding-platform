@@ -34,3 +34,7 @@
 - MySQL 8.4 把 character 视为需引用的标识符；Pet 实体映射已加反引号。隔离实例与临时数据验证后已停止并清理。
 
 - 真实 MySQL84 root 密码已按官方 init-file 流程重置；pet_boarding login-path 可认证。现有服务无 pet_boarding 数据库，未对业务库执行迁移。
+
+- 真实 MySQL84 的 pet_boarding 已由 Flyway V1 迁移，版本 1 success=1，九张业务表齐全；当前无真实用户数据。
+- 自动审批拒绝新增持久应用账号及凭据存储，因此本轮只通过本机临时进程使用现有 root 凭据完成迁移，未改动 MySQL 账号/授权。
+- 商家模块 27 项单元及 Web 切片测试通过，后端 JAR 可打包；实际商家 HTTP 联调尚未执行。

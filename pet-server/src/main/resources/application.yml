@@ -23,6 +23,8 @@ app:
     secret-base64: ${JWT_SECRET_BASE64}
     issuer: ${JWT_ISSUER}
     ttl: ${JWT_TTL:PT168H}
+  admin:
+    openids: ${ADMIN_OPENIDS:}
 wechat:
   miniapp:
     app-id: ${WECHAT_APP_ID}
