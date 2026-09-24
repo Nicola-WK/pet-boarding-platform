@@ -38,3 +38,7 @@
 - 真实 MySQL84 的 pet_boarding 已由 Flyway V1 迁移，版本 1 success=1，九张业务表齐全；当前无真实用户数据。
 - 自动审批拒绝新增持久应用账号及凭据存储，因此本轮只通过本机临时进程使用现有 root 凭据完成迁移，未改动 MySQL 账号/授权。
 - 商家模块 27 项单元及 Web 切片测试通过，后端 JAR 可打包；实际商家 HTTP 联调尚未执行。
+
+## Step 7 寄养服务
+- V1 已有 boarding_service 表与服务类型/状态/价格索引，无需新迁移。
+- 商家重新进入待审核时，公开服务查询需 JOIN provider 限制 audit_status=1，避免已上架服务泄露。

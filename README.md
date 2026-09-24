@@ -1,6 +1,6 @@
 # 宠爱管家（Pet Boarding Platform）
 
-宠物寄养微信小程序 V1.0。已完成 Step 1–6：初始化、数据库设计、后端基础框架、微信登录、宠物档案和商家系统。寄养服务、订单、支付及小程序页面仍按 [开发计划](task_plan.md) 后续阶段实现。
+宠物寄养微信小程序 V1.0。已完成 Step 1–7：初始化、数据库设计、后端基础框架、微信登录、宠物档案、商家系统和寄养服务。订单、支付及小程序页面仍按 [开发计划](task_plan.md) 后续阶段实现。
 
 ## 目录
 
@@ -13,6 +13,7 @@
 | `docs/database-design.md` | 表关系、字段及业务约束 |
 | `docs/api-auth-pet.md` | 用户认证与宠物 API、测试流程和错误码 |
 | `docs/api-provider.md` | 商家申请、公开列表、审核 API 和测试流程 |
+| `docs/api-service.md` | 寄养服务管理、公开浏览 API 和测试流程 |
 
 ## 运行后端
 
@@ -41,7 +42,7 @@ mvn spring-boot:run
 
 ## API 验证
 
-微信小程序调用 `wx.login()` 获取一次性 code，发送给 `POST /auth/wechat/login`。服务端换取 openid，创建或复用用户并返回 Bearer JWT。使用该 JWT 调用 `GET /users/profile`、宠物接口和商家申请接口。请求与响应示例见 [认证与宠物 API](docs/api-auth-pet.md) 和 [商家 API](docs/api-provider.md)。
+微信小程序调用 `wx.login()` 获取一次性 code，发送给 `POST /auth/wechat/login`。服务端换取 openid，创建或复用用户并返回 Bearer JWT。使用该 JWT 调用 `GET /users/profile`、宠物接口和商家申请接口。请求与响应示例见 [认证与宠物 API](docs/api-auth-pet.md) 、[商家 API](docs/api-provider.md) 和 [寄养服务 API](docs/api-service.md)。
 
 ```powershell
 cd pet-server

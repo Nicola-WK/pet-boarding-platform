@@ -2,6 +2,7 @@ package com.petboarding.controller;
 
 import com.petboarding.config.JwtProperties;
 import com.petboarding.security.SecurityConfig;
+import com.petboarding.mapper.BoardingServiceMapper;
 import com.petboarding.mapper.PetMapper;
 import com.petboarding.mapper.ProviderMapper;
 import com.petboarding.mapper.UserMapper;
@@ -39,6 +40,7 @@ class ApiSecurityWebTest {
     @MockitoBean PetService petService;
     @MockitoBean UserService userService;
     @MockitoBean PetMapper petMapper;
+    @MockitoBean BoardingServiceMapper boardingServiceMapper;
     @MockitoBean ProviderMapper providerMapper;
     @MockitoBean UserMapper userMapper;
 
