@@ -43,8 +43,13 @@ const uniAdapter: AxiosAdapter = (config) => new Promise((resolve, reject) => {
   config.signal?.addEventListener?.('abort', () => task.abort?.(), { once: true })
 })
 
+let defaultBaseURL = '/api'
+// #ifdef MP-WEIXIN
+defaultBaseURL = 'http://127.0.0.1:8080'
+// #endif
+
 const client = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || defaultBaseURL,
   timeout: 15000,
   adapter: uniAdapter,
   headers: { 'Content-Type': 'application/json' },

@@ -19,7 +19,7 @@ H5 开发地址默认为 `http://localhost:5173`。不创建 `.env` 时，API �
 npm run build:mp-weixin
 ```
 
-在微信开发者工具中导入 `pet-miniapp/dist/build/mp-weixin`。将 `src/manifest.json` 的 `mp-weixin.appid` 改为自己的小程序 AppID，并在后端设置匹配的 `WECHAT_APP_ID` 和 `WECHAT_APP_SECRET`。微信小程序调试时设置 `VITE_API_BASE_URL` 为从开发者工具可访问的后端完整地址；真机需 HTTPS 和微信公众平台配置的合法 request 域名。修改环境变量后重新构建。
+在微信开发者工具中导入 `pet-miniapp/dist/build/mp-weixin`。将 `src/manifest.json` 的 `mp-weixin.appid` 改为自己的小程序 AppID，并在后端设置匹配的 `WECHAT_APP_ID` 和 `WECHAT_APP_SECRET`。微信小程序模拟器默认请求 `http://127.0.0.1:8080`，需先启动后端。若后端不在本机，在 `.env.local` 中设置 `VITE_API_BASE_URL` 为开发者工具可访问的完整地址；真机需改为 HTTPS 和微信公众平台配置的合法 request 域名。修改环境变量后重新构建。开发者工具本地调试 HTTP 地址时，在「详情 → 本地设置」开启不校验合法域名。
 
 订单详情的“模拟付款”仅在前端 `VITE_DEMO_PAYMENT_ENABLED=true` 且后端 `PAYMENT_DEMO_ENABLED=true` 时可用。默认关闭，**不接入真实微信支付，也不发生资金交易**。
 
