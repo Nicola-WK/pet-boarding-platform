@@ -35,4 +35,4 @@ npm run build:mp-weixin
 
 ## 本机后端快捷启动
 
-确认 MySQL84 正在运行并已构建 `pet-server/target/pet-server-1.0.0-SNAPSHOT.jar` 后，在项目根目录执行 `powershell -ExecutionPolicy Bypass -File scripts/start-local-backend.ps1`。脚本仅在本机窗口提示输入 MySQL 密码，不保存密码。未设置微信 AppID/AppSecret 时只供公开页面预览；微信登录仍需真实、匹配的微信凭据。后端启动后访问 `http://127.0.0.1:8080/health` 检查。
+确认 MySQL84 正在运行并已构建 `pet-server/target/pet-server-1.0.0-SNAPSHOT.jar` 后，在项目根目录执行 `powershell -ExecutionPolicy Bypass -File scripts/start-local-backend.ps1`。脚本仅在本机窗口提示输入 MySQL 密码，不保存密码。若在 `src/manifest.json` 的 `mp-weixin.appid` 填入自己的 AppID，脚本还会安全提示输入 AppSecret；不在仓库存储 AppSecret。未设置时仅供公开页面预览。后端启动后访问 `http://127.0.0.1:8080/health` 检查。

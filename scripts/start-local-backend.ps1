@@ -11,6 +11,7 @@ if (-not (Test-Path -LiteralPath $java)) { throw "Java 17 not found: $java. Set 
 
 $securePassword = Read-Host 'Enter the local MySQL root password' -AsSecureString
 $passwordPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
+$wechatSecretPointer = [IntPtr]::Zero
 try {
     $env:DB_URL = 'jdbc:mysql://127.0.0.1:3306/pet_boarding?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai'
     $env:DB_USERNAME = 'root'
@@ -23,8 +24,20 @@ try {
         $env:JWT_SECRET_BASE64 = [Convert]::ToBase64String($keyBytes)
     } finally { $random.Dispose() }
 
-    # Public pages work without WeChat credentials; login needs real matching values.
-    if (-not $env:WECHAT_APP_ID) { $env:WECHAT_APP_ID = 'local-preview-only' }
+    # Read the public AppID from source so it matches the next mini program build.
+    $manifestPath = Join-Path $projectRoot 'pet-miniapp\src\manifest.json'
+    $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+    $configuredAppId = $manifest.'mp-weixin'.appid
+    if ($configuredAppId -and $configuredAppId -ne 'touristappid') {
+        $env:WECHAT_APP_ID = $configuredAppId
+        if (-not $env:WECHAT_APP_SECRET) {
+            $secureWechatSecret = Read-Host 'Enter WeChat AppSecret (press Enter to skip login)' -AsSecureString
+            $wechatSecretPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureWechatSecret)
+            $env:WECHAT_APP_SECRET = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($wechatSecretPointer)
+        }
+    } else {
+        $env:WECHAT_APP_ID = 'local-preview-only'
+    }
     if (-not $env:WECHAT_APP_SECRET) { $env:WECHAT_APP_SECRET = 'local-preview-only' }
     $env:PAYMENT_DEMO_ENABLED = if ($DemoPayment) { 'true' } else { 'false' }
 
@@ -33,5 +46,6 @@ try {
     & $java -jar $jar
 } finally {
     [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($passwordPointer)
-    Remove-Item Env:DB_PASSWORD, Env:JWT_SECRET_BASE64 -ErrorAction SilentlyContinue
+    if ($wechatSecretPointer -ne [IntPtr]::Zero) { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($wechatSecretPointer) }
+    Remove-Item Env:DB_PASSWORD, Env:JWT_SECRET_BASE64, Env:WECHAT_APP_SECRET -ErrorAction SilentlyContinue
 }
