@@ -11,6 +11,7 @@ const provider = ref<Provider | null>(null)
 const services = ref<BoardingService[]>([])
 const reviews = ref<Review[]>([])
 const loading = ref(true)
+const demoEnabled = import.meta.env.VITE_DEMO_MODE_ENABLED === 'true'
 const failed = ref(false)
 
 async function load(id: string) {
@@ -48,7 +49,7 @@ onLoad((options) => { if (options?.id) load(String(options.id)); else loading.va
           <view class="service-info"><text class="service-name">{{ service.name }}</text><text class="muted small">{{ petTypeName(service.petType) }} · 可接待 {{ service.capacity }} 只</text><text class="price">¥{{ money(service.price) }}<text class="price-unit">/天</text></text></view>
           <text class="arrow">›</text>
         </view>
-        <view class="section-gap space-between"><text class="section-title">真实评价</text><text class="muted small">{{ reviews.length }} 条</text></view>
+        <view class="section-gap space-between"><text class="section-title">{{ demoEnabled ? '演示评价' : '真实评价' }}</text><text class="muted small">{{ reviews.length }} 条</text></view>
         <EmptyState v-if="!reviews.length" title="还没有评价" detail="完成寄养后，用户可以在这里分享体验" />
         <view v-for="review in reviews" :key="review.id" class="surface review-card"><text class="stars">{{ '★'.repeat(review.score) }}{{ '☆'.repeat(5 - review.score) }}</text><text class="muted small">{{ review.createdAt?.slice(0, 10) }}</text><text class="body-text">{{ review.content || '用户留下了评分。' }}</text></view>
       </view>
