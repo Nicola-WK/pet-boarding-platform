@@ -18,6 +18,7 @@
 | `docs/api-payment-demo.md` | 本地模拟支付开关、接口与测试流程 |
 | `docs/api-review.md` | 订单评价、公开列表与测试流程 |
 | `docs/frontend-test-flow.md` | 小程序页面、API 示例与测试流程 |
+| `docs/run-on-another-device.md` | 在另一台 Windows 电脑克隆、建库和运行演示版 |
 
 ## 运行后端
 
