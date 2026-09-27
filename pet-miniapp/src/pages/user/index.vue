@@ -13,6 +13,10 @@ async function login() {
   loggingIn.value = true
   try {
     // #ifdef MP-WEIXIN
+    if (uni.getAccountInfoSync().miniProgram.appId === 'touristappid') {
+      uni.showToast({ title: '请先配置小程序 AppID', icon: 'none' })
+      return
+    }
     const result = await uni.login({ provider: 'weixin' })
     if (!result.code) throw new Error('微信登录未返回授权码')
     auth.setSession(await authApi.login(result.code))
