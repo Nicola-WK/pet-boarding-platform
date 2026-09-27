@@ -28,29 +28,30 @@ npm run build:mp-weixin
 此模式供简历展示，使用本机 MySQL，登录与支付均为演示操作。后端默认关闭演示接口；使用启动脚本的 `-DemoMode` 后只监听 `127.0.0.1`。
 
 ```powershell
-cd D:\codex\pet\pet-server
+# 从仓库根目录开始
+cd pet-server
 mvn package
-cd D:\codex\pet
-$env:JAVA_HOME = 'D:\Java\jdk-17.0.19+10'
+cd ..
+$env:JAVA_HOME = 'C:\path\to\jdk-17' # 改为你的 Java 17 安装目录
 powershell -ExecutionPolicy Bypass -File scripts/start-local-backend.ps1 -DemoMode
 ```
 
 在脚本窗口输入本机 MySQL 密码并保持窗口打开。另开 PowerShell 构建小程序：
 
 ```powershell
-cd D:\codex\pet\pet-miniapp
+cd pet-miniapp
 npm ci
 npm run build:mp-weixin:demo
 ```
 
-微信开发者工具导入 `D:\codex\pet\pet-miniapp\dist\build\mp-weixin`，使用游客模式即可。进入“我的”，点“体验宠物主人”新增宠物，再回首页浏览“演示寄养屋”、创建订单并在订单详情点“模拟付款”；回“我的”点“体验寄养商家”，进商家中心处理订单。两个按钮可以随时切换演示角色。订单开始寄养需到入住日期，完成服务需到离店日期；这是订单业务时间规则。首次演示登录会准备 4 家示例商家、覆盖狗狗、猫咪和小宠的服务、3 只宠物及有历史订单关联的演示评价；重复登录不会重复创建已有数据。
+微信开发者工具导入仓库内的 `pet-miniapp/dist/build/mp-weixin`，使用游客模式即可。进入“我的”，点“体验宠物主人”查看演示宠物或新增档案，再回首页浏览示例商家、创建订单并在订单详情点“模拟付款”；回“我的”点“体验寄养商家”，进商家中心处理订单。两个按钮可以随时切换演示角色。订单开始寄养需到入住日期，完成服务需到离店日期；这是订单业务时间规则。首次演示登录会准备 4 家示例商家、覆盖狗狗、猫咪和小宠的服务、3 只宠物及有历史订单关联的演示评价；重复登录不会重复创建已有数据。
 
 游客模式下开发者工具可能输出自身的 `webapi_getwxaasyncsecinfo` 或 `timeout` 信息；以页面和本机 API 是否可用为准。真实微信登录、真机预览和上线仍需要正式 AppID、AppSecret 和合法域名。
 
 ## 页面检查
 
 1. 首页搜索或选择宠物类型 → 寄养列表显示筛选结果；没有商家时显示空状态。
-2. 打开商家 → 查看介绍、可预约服务和真实评价；服务卡片进入预约页。
+2. 打开商家 → 查看介绍、可预约服务和评价（演示构建中明确标注示例评价）；服务卡片进入预约页。
 3. 微信登录 → 新增宠物 → 选择入住和离店日期 → 创建订单 → 在“我的订单”查看状态。
 4. 开启双方模拟支付开关后，可完成“模拟付款 → 商家确认 → 开始寄养 → 完成服务 → 评价”的演示流程。
 5. 商家中心申请商家，审核通过后新建、编辑、上下架服务并处理订单。审核接口与操作说明见根目录 `docs/api-provider.md`。
@@ -59,4 +60,4 @@ npm run build:mp-weixin:demo
 
 ## 本机后端快捷启动
 
-确认 MySQL84 正在运行并已构建 `pet-server/target/pet-server-1.0.0-SNAPSHOT.jar` 后，在项目根目录执行 `powershell -ExecutionPolicy Bypass -File scripts/start-local-backend.ps1`。脚本仅在本机窗口提示输入 MySQL 密码，不保存密码。若在 `src/manifest.json` 的 `mp-weixin.appid` 填入自己的 AppID，脚本还会安全提示输入 AppSecret；不在仓库存储 AppSecret。未设置时仅供公开页面预览。后端启动后访问 `http://127.0.0.1:8080/health` 检查。
+确认 MySQL 8 服务正在运行并已构建 `pet-server/target/pet-server-1.0.0-SNAPSHOT.jar` 后，在项目根目录执行 `powershell -ExecutionPolicy Bypass -File scripts/start-local-backend.ps1`。脚本仅在本机窗口提示输入 MySQL 密码，不保存密码。若在 `src/manifest.json` 的 `mp-weixin.appid` 填入自己的 AppID，脚本还会安全提示输入 AppSecret；不在仓库存储 AppSecret。未设置时仅供公开页面预览。后端启动后访问 `http://127.0.0.1:8080/health` 检查。
