@@ -56,6 +56,8 @@ mvn package
 
 本地演示支付可设置 `PAYMENT_DEMO_ENABLED=true`，默认关闭；详见 [模拟支付 API](docs/api-payment-demo.md)。小程序构建与调试见 [前端运行说明](pet-miniapp/README.md)。前端页面与接口验证步骤见 [测试流程](docs/frontend-test-flow.md)。真实微信登录联调仍需小程序 AppID 和 AppSecret。
 
+无 AppID 时可按 [本机演示说明](pet-miniapp/README.md) 构建游客模式版本。演示登录与模拟支付默认关闭。
+
 ## 开发顺序
 
 项目初始化 → 数据库设计 → 后端基础框架 → 用户认证 → 宠物档案 → 商家 → 寄养服务 → 订单 → 支付 → 评价 → 小程序页面 → 测试。

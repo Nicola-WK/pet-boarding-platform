@@ -23,6 +23,30 @@ npm run build:mp-weixin
 
 订单详情的“模拟付款”仅在前端 `VITE_DEMO_PAYMENT_ENABLED=true` 且后端 `PAYMENT_DEMO_ENABLED=true` 时可用。默认关闭，**不接入真实微信支付，也不发生资金交易**。
 
+## 没有 AppID 时的本机演示
+
+此模式供简历展示，使用本机 MySQL，登录与支付均为演示操作。后端默认关闭演示接口；使用启动脚本的 `-DemoMode` 后只监听 `127.0.0.1`。
+
+```powershell
+cd D:\codex\pet\pet-server
+mvn package
+cd D:\codex\pet
+$env:JAVA_HOME = 'D:\Java\jdk-17.0.19+10'
+powershell -ExecutionPolicy Bypass -File scripts/start-local-backend.ps1 -DemoMode
+```
+
+在脚本窗口输入本机 MySQL 密码并保持窗口打开。另开 PowerShell 构建小程序：
+
+```powershell
+cd D:\codex\pet\pet-miniapp
+npm ci
+npm run build:mp-weixin:demo
+```
+
+微信开发者工具导入 `D:\codex\pet\pet-miniapp\dist\build\mp-weixin`，使用游客模式即可。进入“我的”，点“体验宠物主人”新增宠物，再回首页浏览“演示寄养屋”、创建订单并在订单详情点“模拟付款”；回“我的”点“体验寄养商家”，进商家中心处理订单。两个按钮可以随时切换演示角色。订单开始寄养需到入住日期，完成服务需到离店日期；这是订单业务时间规则。首次演示登录会创建两个独立账号、一个已审核示例商家和一项服务；重复登录不会重建已有数据。
+
+游客模式下开发者工具可能输出自身的 `webapi_getwxaasyncsecinfo` 或 `timeout` 信息；以页面和本机 API 是否可用为准。真实微信登录、真机预览和上线仍需要正式 AppID、AppSecret 和合法域名。
+
 ## 页面检查
 
 1. 首页搜索或选择宠物类型 → 寄养列表显示筛选结果；没有商家时显示空状态。

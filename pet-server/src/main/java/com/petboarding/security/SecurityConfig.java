@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/health", "/auth/wechat/login").permitAll()
+                        .requestMatchers("/health", "/auth/wechat/login", "/demo/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/providers", "/providers/{id}",
                                 "/providers/{id}/services", "/providers/{id}/reviews",
                                 "/services", "/services/{id}", "/services/{id}/reviews").permitAll()

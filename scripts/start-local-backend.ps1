@@ -1,5 +1,6 @@
 param(
-    [switch]$DemoPayment
+    [switch]$DemoPayment,
+    [switch]$DemoMode
 )
 
 $ErrorActionPreference = 'Stop'
@@ -26,7 +27,7 @@ try {
 
     # Read the public AppID from source so it matches the next mini program build.
     $manifestPath = Join-Path $projectRoot 'pet-miniapp\src\manifest.json'
-    $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+    $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
     $configuredAppId = $manifest.'mp-weixin'.appid
     if ($configuredAppId -and $configuredAppId -ne 'touristappid') {
         $env:WECHAT_APP_ID = $configuredAppId
@@ -39,7 +40,9 @@ try {
         $env:WECHAT_APP_ID = 'local-preview-only'
     }
     if (-not $env:WECHAT_APP_SECRET) { $env:WECHAT_APP_SECRET = 'local-preview-only' }
-    $env:PAYMENT_DEMO_ENABLED = if ($DemoPayment) { 'true' } else { 'false' }
+    $env:PAYMENT_DEMO_ENABLED = if ($DemoPayment -or $DemoMode) { 'true' } else { 'false' }
+    $env:APP_DEMO_ENABLED = if ($DemoMode) { 'true' } else { 'false' }
+    if ($DemoMode) { $env:SERVER_ADDRESS = '127.0.0.1' }
 
     Write-Host 'Starting pet-server at http://127.0.0.1:8080 ...'
     Write-Host 'Keep this window open while using the mini program. Press Ctrl+C to stop.'

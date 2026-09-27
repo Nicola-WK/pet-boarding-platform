@@ -7,6 +7,7 @@ import type {
 
 export const authApi = {
   login: (code: string) => apiRequest<LoginResult>({ method: 'post', url: '/auth/wechat/login', data: { code } }),
+  demoLogin: (role: 'customer' | 'provider') => apiRequest<LoginResult>({ method: 'post', url: '/demo/auth/login', data: { role } }),
   profile: () => apiRequest<UserProfile>({ method: 'get', url: '/users/profile' }),
 }
 
